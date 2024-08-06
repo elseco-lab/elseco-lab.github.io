@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tauri App</title>
+    <script>
+      if (window.__TAURI__) {
+        const script = document.createElement("script");
+        script.src = "/main-tauri.js";
+        script.type = "module";
+        document.head.appendChild(script);
+      }
+    </script>
+    <script type="module" crossorigin src="/assets/index-BHG4awZ_.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-DEKgBbG4.css">
+  </head>
+
+  <body>
+    <div id="warning">
+      <p><strong>Warning!</strong> You are currently using the HTML version. To use the full functionality of this site, please switch to the <a href="https://tauri-app.herokuapp.com">Tauri version</a>.</p>
+    </div>
+
+    <dialog id="changelog">
+      <h1>Changelog</h1>
+      <p>Changelog fjdks afjdks afkldsj fkdjsa fdj safljdksa f;kdjsa fldjla kfjdsf</p>
+      <p>jfkdsljfkdsa fkdjsa f;jdklsafj dksaj;flk dsja;fkdjskalfj ldksa;jf kd</p>
+      <button id="closeChangelog">Close</button>
+    </dialog>
+
+    <!-- <div id="header">
+      <a id="logo">
+        <img src="./logo-de.png" height="50px" />
+        <img src="./assets/firmenlogo-de.webp" height="50px" />
+      </a>
+    </div> -->
+
+    <div id="hidok"></div>
+
+    <div class="box" id="filebox">
+      <div>
+        <button onclick="document.getElementById('cfgfile').click()">Open File...</button>
+        <input type="file" id="cfgfile" accept=".ehx" style="opacity: 0; position: absolute; z-index: -1" />
+        <select id="fileselect">
+          <option value="0">Recent...</option>
+        </select>
+      </div>
+
+      <div class="box">
+        <div class="box-header">Firmware:</div>
+        <div class="box-content">
+          <!-- <label id="openlabel" for="cfgfile" style="cursor: pointer;">Open...</label> -->
+          <div>
+            <select id="fwselect" hidden>
+              <option value="0">Recent...</option>
+            </select>
+          </div>
+          <div>Dateiname: <a id="fw_filename"></a></div>
+          <div>HwID: <a id="fw_hwid"></a></div>
+          <div>FwID: <a id="fw_fwid"></a></div>
+          <div>Fw Name: <a id="fw_fwname"></a></div>
+          <div>Version: <a id="fw_fwversion"></a></div>
+          <button id="buttonShowChangelog" onclick="showChangelog()">Changelog</button>
+        </div>
+      </div>
+      <div class="box" id="configbox">
+        <div class="box-header">Config:</div>
+        <div class="box-content">
+          <div>Hash: <a id="cfg_hash"></a></div>
+          <div>Name: <a id="cfg_name"></a></div>
+          <div>Date: <a id="cfg_date"></a></div>
+          <div>Signature: <a id="cfg_sign"></a></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="box" id="devicebox">
+      <fieldset>
+        <legend>Connection:</legend>
+        <div>
+          <input type="radio" id="usb" name="connection" value="usb" checked="true" />
+          <label for="usb">USB</label>
+        </div>
+        <div>
+          <input type="radio" id="remote" name="connection" value="remote" />
+          <label for="remote">Remote</label>
+        </div>
+        <div id="deviceselect_div" hidden>
+          <select id="usbdevice" disabled="true">
+            <option value="0">Select device...</option>
+          </select>
+
+          <input type="checkbox" id="autoconnect" />
+          <label for="autoconnect">Auto</label>
+        </div>
+        <button id="connect" onclick="connect()">Connect</button>
+      </fieldset>
+      <div class="box">
+        <div class="box-header">Device:</div>
+        <div class="box-content">
+          <!-- <select id="devlist" style="width: 100%" disabled="true"></select> -->
+          <button id="connbutton" onclick="connDevice()">Connect...</button>
+          <div>Status: <a id="dev_status">not connected.</a></div>
+          <div>BL Version: <a id="dev_blversion"></a></div>
+          <div>HwID: <a id="dev_hwid"></a></div>
+          <div>FwID: <a id="dev_fwid"></a></div>
+          <div>Fw Name: <a id="dev_fwname"></a></div>
+          <div>Version: <a id="dev_fwversion"></a></div>
+          <div><button id="startFWbutton" onclick="startFw()">Start Firmware</button></div>
+          <div class="box" draggable="true">
+            <div class="box-header">Config:</div>
+            <div class="box-content">
+              <div>Hash: <a id="dev_cfg_hash"></a></div>
+              <div>Name: <a id="dev_cfg_name"></a></div>
+              <div>Date: <a id="dev_cfg_date"></a></div>
+              <div>Signature: <a id="dev_cfg_sign"></a></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <fieldset id="updatebox">
+      <legend>Update</legend>
+      <div>
+        <input type="checkbox" id="updateFW" />
+        <label for="updateFW">Firmware</label>
+      </div>
+      <div>
+        <input type="checkbox" id="updateCFG" />
+        <label for="updateCFG">Config</label>
+      </div>
+      <div>
+        <button id="updateFWbutton" onclick="updateFw()">Start Update</button>
+      </div>
+      <div>
+        <progress id="updateProgress" max="100" value="70"></progress>
+      </div>
+    </fieldset>
+
+    <br />
+
+    <div id="control">
+      <button id="startProg" onclick="startProg()">Program</button>
+      <progress id="progressbar" value="0" style="color: blue; width: 100%"></progress>
+    </div>
+
+    <textarea id="log" rows="10" cols="50"></textarea>
+
+    <button onclick="test1()">test1</button>
+    <button onclick="test2()">test2</button>
+  </body>
+</html>
